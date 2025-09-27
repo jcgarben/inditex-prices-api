@@ -4,47 +4,65 @@ info:
   description: "REST API to query applicable product prices based on brand, product, and date"
   version: "1.0"
 servers:
-- url: http://localhost:8080
+  - url: http://localhost:8080
 paths:
   /price:
     get:
       tags:
-      - Price
+        - Price
       operationId: getPrice
       parameters:
-      - name: date
-        description: "Date to which the applicable price belongs"
-        in: query
-        required: true
-        schema:
-          type: string
-          format: date-time
-          example: "2020-06-14-00.00.00"
-      - name: productId
-        description: "Product id to which the applicable price belongs"
-        in: query
-        required: true
-        schema:
-          type: integer
-          format: int64
-          example: 35455
-          minimum: 0
-      - name: brandId
-        description: "Brand id to which the applicable price belongs"
-        in: query
-        required: true
-        schema:
-          type: integer
-          format: int32
-          example: 1
-          minimum: 0
+        - name: date
+          description: "Date to which the applicable price belongs"
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+            example: "2020-06-14T00:00:00Z"
+        - name: productId
+          description: "Product id to which the applicable price belongs"
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 35455
+            minimum: 0
+        - name: brandId
+          description: "Brand id to which the applicable price belongs"
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+            example: 1
+            minimum: 0
       responses:
-        "200":
+        200:
           description: OK
           content:
-            'application/json':
+            application/json:
               schema:
                 $ref: '#/components/schemas/PriceResponse'
+        400:
+          description: Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Price not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
     PriceResponse:
@@ -65,15 +83,35 @@ components:
         startDate:
           type: string
           format: date-time
-          example: "2020-06-14-00.00.00"
+          example: "2020-06-14T00:00:00Z"
         endDate:
           type: string
           format: date-time
-          example: "2020-12-31-23.59.59"
+          example: "2020-12-31T23.59.59Z"
         price:
           type: number
-          format: float
+          format: double
           example: 35.50
         currency:
           type: string
           example: EUR
+    ErrorResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          example: "2020-06-14T00:00:00Z"
+        status:
+          type: integer
+          format: int32
+          example: 404
+        error:
+          type: string
+          example: "Description of the error"
+        message:
+          type: string
+          example: "Description of the message"
+        path:
+          type: string
+          example: "Path"
