@@ -19,7 +19,7 @@ paths:
           schema:
             type: string
             format: date-time
-            example: "2020-06-14T00:00:00Z"
+            example: "2020-06-14T00:00:00"
         - name: productId
           description: "Product id to which the applicable price belongs"
           in: query
@@ -83,14 +83,14 @@ components:
         startDate:
           type: string
           format: date-time
-          example: "2020-06-14T00:00:00Z"
+          example: "2020-06-14T00:00:00"
         endDate:
           type: string
           format: date-time
-          example: "2020-12-31T23.59.59Z"
+          example: "2020-12-31T23.59.59"
         price:
           type: number
-          format: double
+          multipleOf: 0.01
           example: 35.50
         currency:
           type: string
@@ -101,7 +101,7 @@ components:
         timestamp:
           type: string
           format: date-time
-          example: "2020-06-14T00:00:00Z"
+          example: "2020-06-14-11.00.00"
         status:
           type: integer
           format: int32

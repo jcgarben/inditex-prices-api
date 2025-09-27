@@ -71,6 +71,13 @@
             <artifactId>mockito-junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- H2 in-memory database for testing and initial data -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -92,11 +99,11 @@
                         </goals>
                         <configuration>
                             <inputSpec>
-                                ${project.basedir}/src/main/resources/static/price-api.yaml
+                                ${project.basedir}/openapi.yaml
                             </inputSpec>
                             <generatorName>spring</generatorName>
-                            <apiPackage>com.inditex.prices.infrastructure.rest.api</apiPackage>
-                            <modelPackage>com.inditex.prices.infrastructure.rest.model</modelPackage>
+                            <apiPackage>com.inditex.prices.infrastructure.rest</apiPackage>
+                            <modelPackage>com.inditex.prices.infrastructure.rest.dto</modelPackage>
                             <supportingFilesToGenerate>
                                 ApiUtil.java
                             </supportingFilesToGenerate>
