@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PriceTest {
 
     @Test
-    void shouldCreateValidPrice() {
+    void givenValidValues_whenCreatingPrice_thenFieldsMatchInput() {
         LocalDateTime start = LocalDateTime.of(2020, 6, 14, 0, 0);
         LocalDateTime end = LocalDateTime.of(2020, 12, 31, 23, 59);
 

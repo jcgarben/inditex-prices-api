@@ -3,10 +3,11 @@ package com.inditex.prices.infrastructure.rest;
 import com.inditex.prices.application.service.GetPriceUseCase;
 import com.inditex.prices.domain.exception.PriceNotFoundException;
 import com.inditex.prices.domain.model.Price;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
@@ -17,43 +18,39 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class PriceControllerTest {
 
     @Mock
     private GetPriceUseCase getPriceUseCase;
 
+    @InjectMocks
     private PriceController priceController;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-        priceController = new PriceController(getPriceUseCase);
-    }
-
     @Test
-    void shouldReturn200WhenPriceExists() {
+    void givenExistingPrice_whenGetPrice_thenReturns200() {
         LocalDateTime date = LocalDateTime.of(2020, 6, 14, 10, 0);
-        Price price = new Price(1, 35455L, 1,
+        Price price = new Price(
+                1, 35455L, 1,
                 LocalDateTime.of(2020, 6, 14, 0, 0),
                 LocalDateTime.of(2020, 12, 31, 23, 59),
-                0, new BigDecimal("35.50"), "EUR");
-
-        when(getPriceUseCase.execute(1, 35455L, date))
-                .thenReturn(Optional.of(price));
+                0,
+                new BigDecimal("35.50"),
+                "EUR"
+        );
+        when(getPriceUseCase.execute(1, 35455L, date)).thenReturn(Optional.of(price));
 
         ResponseEntity<?> response = priceController.getPrice(1, 35455L, date);
 
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
     }
 
     @Test
-    void shouldThrowPriceNotFoundExceptionWhenPriceNotExists() {
+    void givenNonExistingPrice_whenGetPrice_thenThrowsPriceNotFoundException() {
         LocalDateTime date = LocalDateTime.of(2020, 6, 14, 10, 0);
-        when(getPriceUseCase.execute(1, 35455L, date))
-                .thenReturn(Optional.empty());
+        when(getPriceUseCase.execute(1, 35455L, date)).thenReturn(Optional.empty());
 
-        assertThrows(PriceNotFoundException.class, () -> {
-            priceController.getPrice(1, 35455L, date);
-        });
+        assertThrows(PriceNotFoundException.class,
+                () -> priceController.getPrice(1, 35455L, date));
     }
 }

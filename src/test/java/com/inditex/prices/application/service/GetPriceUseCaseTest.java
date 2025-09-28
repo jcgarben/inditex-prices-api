@@ -1,6 +1,6 @@
 package com.inditex.prices.application.service;
 
-import com.inditex.prices.application.port.out.PriceRepositoryPort;
+import com.inditex.prices.application.port.PriceRepositoryPort;
 import com.inditex.prices.domain.model.Price;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ class GetPriceUseCaseTest {
     }
 
     @Test
-    void shouldReturnPriceWhenExists() {
+    void givenExistingApplicablePrice_whenExecutingUseCase_thenReturnsPrice() {
         LocalDateTime date = LocalDateTime.of(2020, 6, 14, 10, 0);
         Price expectedPrice = new Price(1, 35455L, 1,
                 LocalDateTime.of(2020, 6, 14, 0, 0),
@@ -48,7 +48,7 @@ class GetPriceUseCaseTest {
     }
 
     @Test
-    void shouldReturnEmptyWhenNotExists() {
+    void givenNoApplicablePrice_whenExecutingUseCase_thenReturnsEmptyOptional() {
         LocalDateTime date = LocalDateTime.of(2020, 6, 14, 10, 0);
         when(priceRepositoryPort.findApplicablePrices(1, 35455L, date))
                 .thenReturn(Collections.emptyList());
