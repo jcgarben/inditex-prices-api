@@ -17,11 +17,11 @@ public interface JpaPriceRepository extends JpaRepository<PriceEntity, Long> {
                 FROM PriceEntity p
                 WHERE p.brandId = :brandId
                   AND p.productId = :productId
-                  AND :applicationDate BETWEEN p.startDate AND p.endDate
+                  AND :date BETWEEN p.startDate AND p.endDate
             """)
-    List<PriceEntity> findApplicablePrice(
+    List<PriceEntity> findApplicablePrices(
             @Param("brandId") Integer brandId,
             @Param("productId") Long productId,
-            @Param("applicationDate") LocalDateTime applicationDate
+            @Param("date") LocalDateTime date
     );
 }
