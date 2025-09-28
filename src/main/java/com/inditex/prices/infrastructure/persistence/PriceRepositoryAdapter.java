@@ -1,6 +1,6 @@
 package com.inditex.prices.infrastructure.persistence;
 
-import com.inditex.prices.application.port.out.PriceRepositoryPort;
+import com.inditex.prices.application.port.PriceRepositoryPort;
 import com.inditex.prices.domain.model.Price;
 import com.inditex.prices.infrastructure.persistence.entity.PriceEntity;
 import lombok.RequiredArgsConstructor;
