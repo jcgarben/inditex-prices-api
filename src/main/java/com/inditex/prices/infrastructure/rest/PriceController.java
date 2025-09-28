@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 
 @RestController
-@RequestMapping("/prices")
+@RequestMapping("/price")
 public class PriceController {
     private final GetPriceUseCase getPriceUseCase;
 
