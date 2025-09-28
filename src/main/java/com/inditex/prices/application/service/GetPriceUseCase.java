@@ -1,6 +1,6 @@
 package com.inditex.prices.application.service;
 
-import com.inditex.prices.application.port.out.PriceRepository;
+import com.inditex.prices.application.port.out.PriceRepositoryPort;
 import com.inditex.prices.domain.model.Price;
 import org.springframework.stereotype.Service;
 
@@ -9,13 +9,13 @@ import java.util.Optional;
 
 @Service
 public class GetPriceUseCase {
-    private final PriceRepository priceRepository;
+    private final PriceRepositoryPort priceRepositoryPort;
 
-    public GetPriceUseCase(PriceRepository priceRepository) {
-        this.priceRepository = priceRepository;
+    public GetPriceUseCase(PriceRepositoryPort priceRepositoryPort) {
+        this.priceRepositoryPort = priceRepositoryPort;
     }
 
     public Optional<Price> execute(Integer brandId, Long productId, LocalDateTime date) {
-        return priceRepository.findApplicablePrice(brandId, productId, date);
+        return priceRepositoryPort.findApplicablePrice(brandId, productId, date);
     }
 }
