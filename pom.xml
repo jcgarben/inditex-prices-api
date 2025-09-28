@@ -155,6 +155,16 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <includes>
+                        <include>**/prices/domain/**</include>
+                        <include>**/prices/application/**</include>
+                        <include>**/prices/infrastructure/persistence/**</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/*Mapper*</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
