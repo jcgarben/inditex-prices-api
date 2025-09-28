@@ -1,8 +1,14 @@
 package com.inditex.prices.infrastructure.rest;
 
 import com.inditex.prices.application.service.GetPriceUseCase;
+import com.inditex.prices.domain.exception.PriceNotFoundException;
+import com.inditex.prices.infrastructure.rest.dto.PriceResponse;
+import com.inditex.prices.infrastructure.rest.mapper.PriceMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 
@@ -16,13 +22,15 @@ public class PriceController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getPrice(
-            @RequestParam LocalDateTime date,
+    public ResponseEntity<PriceResponse> getPrice(
+            @RequestParam Integer brandId,
             @RequestParam Long productId,
-            @RequestParam Integer brandId) {
+            @RequestParam LocalDateTime date
+    ) {
 
         return getPriceUseCase.execute(brandId, productId, date)
+                .map(PriceMapper::toDto)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(PriceNotFoundException::new);
     }
 }
