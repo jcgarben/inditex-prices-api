@@ -9,6 +9,8 @@ import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,8 +38,8 @@ class GetPriceUseCaseTest {
                 LocalDateTime.of(2020, 12, 31, 23, 59),
                 0, new BigDecimal("35.50"), "EUR");
 
-        when(priceRepositoryPort.findApplicablePrice(1, 35455L, date))
-                .thenReturn(Optional.of(expectedPrice));
+        when(priceRepositoryPort.findApplicablePrices(1, 35455L, date))
+                .thenReturn(List.of(expectedPrice));
 
         Optional<Price> result = getPriceUseCase.execute(1, 35455L, date);
 
@@ -48,8 +50,8 @@ class GetPriceUseCaseTest {
     @Test
     void shouldReturnEmptyWhenNotExists() {
         LocalDateTime date = LocalDateTime.of(2020, 6, 14, 10, 0);
-        when(priceRepositoryPort.findApplicablePrice(1, 35455L, date))
-                .thenReturn(Optional.empty());
+        when(priceRepositoryPort.findApplicablePrices(1, 35455L, date))
+                .thenReturn(Collections.emptyList());
 
         Optional<Price> result = getPriceUseCase.execute(1, 35455L, date);
 

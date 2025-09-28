@@ -40,6 +40,8 @@ class PriceApiE2ETest {
                 .get("/prices")
                 .then()
                 .statusCode(200)
+                .body("brandId", equalTo(1))
+                .body("productId", equalTo(35455))
                 .body("priceList", equalTo(1))
                 .body("price", comparesEqualTo(new BigDecimal("35.50")));
     }
@@ -74,6 +76,8 @@ class PriceApiE2ETest {
                 .get("/prices")
                 .then()
                 .statusCode(200)
+                .body("brandId", equalTo(1))
+                .body("productId", equalTo(35455))
                 .body("priceList", equalTo(1))
                 .body("price", comparesEqualTo(new BigDecimal("35.50")));
     }
