@@ -3,7 +3,6 @@ package com.inditex.prices.infrastructure.persistence.entity;
 import com.inditex.prices.infrastructure.persistence.PriceId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
