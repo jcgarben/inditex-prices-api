@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>com.inditex</groupId>
-    <artifactId>pricing-api</artifactId>
+    <artifactId>prices-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Inditex Prices API</name>
     <description>Spring Boot REST API for Inditex pricing</description>
@@ -113,7 +113,7 @@
                         </goals>
                         <configuration>
                             <inputSpec>
-                                ${project.basedir}/openapi.yaml
+                                ${project.basedir}/main/resources/static/openapi.yaml
                             </inputSpec>
                             <generatorName>spring</generatorName>
                             <apiPackage>com.inditex.prices.infrastructure.rest</apiPackage>
@@ -137,6 +137,7 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- Jacoco report plugin -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
