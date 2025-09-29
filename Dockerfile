@@ -5,7 +5,7 @@ FROM maven:3.9.9-amazoncorretto-21 AS build
 WORKDIR /app
 
 # Copy only pom.xml first to leverage Docker cache for dependencies and OpenAPI spec
-COPY pom.xml openapi.yaml ./
+COPY pom.xml .
 RUN mvn dependency:go-offline -B
 
 # Now copy the rest of the source code
